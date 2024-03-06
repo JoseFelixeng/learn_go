@@ -4,4 +4,5 @@ import "fmt"
 
 func main() {
 	fmt.Println("Olá, Mundo!")
+	fmt.Println("Esse é o primeiro código em Go")
 }
