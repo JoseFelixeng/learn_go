@@ -68,3 +68,6 @@ func main (){
 ```
 
 * Dentro de uma função, o operador de declaração curta **:=** , pode ser usado ao invés do operador var, ao usar o operador de declaração curta o mesmo iniciará as variáveis
+
+Digitando o comando ```go env``` é possível vê as variaveis de ambiente do go
+O código  ```GOPATH: endereço go``` serve para guardar o binario implementados.
