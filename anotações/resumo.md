@@ -71,3 +71,98 @@ func main (){
 
 Digitando o comando ```go env``` é possível vê as variaveis de ambiente do go
 O código  ```GOPATH: endereço go``` serve para guardar o binario implementados.
+
+todos os ´´´packages´´´ usados no GO teram que possuir o mesmo nome da pasta onde o arquivo esta armazenado, tirando o ´´´main´´´ pois é onde estará as principais funções 
+
+#### Declarando uma variavel 
+
+```Go
+
+package main 
+
+const a = "Hello Wolrd"
+
+var b bool
+
+b = true 
+
+func main(){
+	println(b)
+}
+
+```
+
+```Go 
+//Declaração de Escobo Global 
+
+var (
+	c int
+	b bool
+)
+```
+
+Variaveis e Importes que não são usados o Go reclama e gera um erro.
+
+É possível ainda declarar variaveis na forma de sort slice é usado para simplificar as declarações de variaveis.
+
+```Go
+
+package main 
+
+
+func main(){
+	a := "Felix" //Tipo String
+	b := 23 // Tipo int
+
+	println(a)
+}
+```
+
+# Tipagem de dados em GO
+
+```GO
+package main
+
+const a = "Hello Wolrd"
+type ID 
+
+var (
+	c int     = 9
+	b bool    = true
+	d float64 = 2.3
+	e string  = "Felix"
+	f ID = 1 
+)
+
+func main() {
+	b = true
+	println(b)
+	println(c)
+}
+
+```
+
+O "fmt" é um pacote usado para formatação dos dados exibidos
+
+```GO
+package main
+
+import "fmt"
+
+const a = "Hello Wolrd"
+type ID int 
+
+var (
+	c int     = 9
+	b bool    = true
+	d float64 = 2.3
+	e string  = "Felix"
+	f ID = 1 
+)
+
+func main() {
+
+	fmt.print("Esse é o tipo de %t", f)
+}
+
+```
