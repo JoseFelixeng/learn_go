@@ -329,3 +329,117 @@ func main() {
 }
 
 ```
+
+
+### Funções no GO 
+
+Passa dados na entrada e sai dados na saida e todas as suas possibilidades possiveis de entrada e saida 
+
+**Exemplo**
+
+```Go
+
+// Aula Sobre Funções no GO
+
+// Função main
+package main
+
+import "fmt"
+
+func main() {
+
+	//Chamando a função em GO
+	a := sum(1, 2)
+
+	fmt.Printf("Func Soma = %d \n", a)
+	// Imprimindo e fazendo a chamada
+
+	fmt.Printf("O valor da função soma é %d", sum(1, 2))
+
+}
+
+// Primeira função em Go
+func sum(a int, b int) int {
+	return a + b
+}
+
+// Se a e b são do mesmo tipo podemos fazer da seguinte forma
+
+func sum(a, b int) int{
+	return a + b
+}
+```
+
+No Go é possível que uma função retorne mais de um valor ao mesmo tempo: 
+
+```Go
+func sum(a, b int) (int,bool){
+	if a + b >= 50{
+		return a + b, true
+	}
+	
+	return a + b, false 
+}
+```
+O GO não possui as funções de resolução de erro. A função error é uma função usada para solução de problemas e correções de bugs com retorno.
+
+```Go
+func sum(a, b int) (int,error){
+	if a + b >= 50{
+		return a + b, true
+	}
+	
+	return 0, new.error("A soma é menor que 50") 
+}
+```
+
+Voce pode utilizar o ultimo valor de uma função para verificar se houve um erro na função, assim usando o error como tratamento de dados.
+```GO
+// Aula Sobre Funções no GO
+
+// Função main
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func main() {
+
+	//Chamando a função em GO
+	//a := sum(1, 2)
+
+	//fmt.Printf("Func Soma = %d \n", a)
+	// Imprimindo e fazendo a chamada
+
+	//fmt.Println(sum(105, 2))
+
+	//Criando uma nova variavel para armazenar o valor e outra para o error
+	valor, err := sum(51, 10)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.println(valor)
+
+}
+
+// Primeira função em Go
+//func sum(a, b int) (int, bool) {
+//	if a+b >= 50 {
+//		return a + b, true
+//	}
+
+//	return a + b, false
+//}
+
+func sum(a, b int) (int, error) {
+	if a+b >= 50 {
+		return a + b, nil // O erro aqui é vazio logo não existe
+	}
+
+	return 0, errors.New("A soma é menor que 50")
+}
+```
