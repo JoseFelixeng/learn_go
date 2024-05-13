@@ -245,3 +245,75 @@ func main() {
 ```
 
 A cima podemos vê um exemplo de utilização de uma  função para alterar uma struct de maneira semelhante ao que seria um metodo de uma class.
+
+
+# Interfaces 
+
+No caso do Go não precisa ser feito uma atachment para a implemetação de uma interface em uma estrutura, nos possibilitando utilizar diversos tipos de uma forma mais simples abstraindo muitas informações na hora implementação. De forma simples qualquer  metodo criado, caso o mesmo possua uma interface o mesmo poderá ser implementado, veja no exemplo a seguir.
+
+```GO
+
+// Aula sobre Struct
+package main
+
+import "fmt"
+
+type Pessoa interface { // Exboço de uma interface em Go
+	Desativar()
+}
+
+type Empresa struct {
+	Nome string
+}
+
+func (e Empresa) Desativar() {
+
+}
+
+type Endereco struct {
+	Logradouro string
+	Numero     int
+	Cidade     string
+	Estado     string
+}
+
+type Cliente struct {
+	// Estrutura de dados usada para um cliente qualquer
+	Nome     string
+	Idade    int
+	Ativo    bool
+	Endereco // Instanciando a estrutura endereço
+}
+
+func (c Cliente) Desativar() { // Dessa forma esta sendo criado um método que pode mudar o valor de uma struct
+	// Criar um metodo para mudar um valor já ativo
+	c.Ativo = false // Levar o cliente para False
+	fmt.Printf("O usuario  %s foi Desativado %t.\n", c.Nome, c.Ativo)
+}
+
+func Desativacao(pessoa Pessoa) {
+	pessoa.Desativar()
+}
+
+func main() {
+	// Intanciando um Cliente
+	felix := Cliente{
+		Nome:  "Felix",
+		Idade: 28,
+		Ativo: true,
+	}
+
+	minhaEmpresa := Empresa{}
+	//felix.Cidade = "Santa Cruz" // usando struct como composição
+	felix.Numero = 45 // usando struct como tipo
+
+	Desativacao(minhaEmpresa)
+
+	fmt.Printf("Nome: %s, Idade: %d, Ativo: %t, Numero: %d", felix.Nome, felix.Idade, felix.Ativo, felix.Numero)
+
+}
+```
+
+Uma observação importante é que a interface no GO permite apenas a utilização de metodos feitos, logo declarações de variaveis e outros exemplos, não podem ser declarados em uma interface no GO.
+
+# Ponteiros
