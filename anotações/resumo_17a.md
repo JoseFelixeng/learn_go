@@ -317,3 +317,58 @@ func main() {
 Uma observação importante é que a interface no GO permite apenas a utilização de metodos feitos, logo declarações de variaveis e outros exemplos, não podem ser declarados em uma interface no GO.
 
 # Ponteiros
+
+Um ponteiro é uma variavel que aponta diretamente para o local da memoria onde a variavel esta guardada na memoria.
+
+```// variavel -> ponteiro de um endereço de memoria  -> valor```
+
+```go
+
+package main
+
+func main() {
+	// Memória -> Endereço -> Valor
+	a := 10 // Fazendo atribuição a variavel a
+
+	// variavel -> ponteiro de um endereço de memoria  -> valor
+	var ponteiro *int = &a // criando um ponteiro que aponta para o endereço de memoria da variavel a
+	*ponteiro = 20
+
+	// b será uma variavel que se comportará como um ponteiro
+	b := &a
+
+	println(&a)       // usado para mostrar o endereço de memoria ao qual a variavel a esta guaradada
+	println(ponteiro) // imprimindo na memoria o valor do ponteiro criado, deverá ser o mesmo de a
+
+	// o '*' é usado para pegar diretamente o valor guardado na memoria
+	println(*b)
+}
+
+```
+
+Usando para manter as variaveis sempre apontando para um determinado valor na memoria.
+
+```go 
+
+package main
+
+func soma(a, b *int) int {
+	*a = 40
+	*b = 80
+	// Se os valores de a e b forem alterados aqui, os dados não são alterados nos valores das entradas
+	// logo o ideal é passar a referencia da memoria na chamada da função e a função soma deve reveber ponteiros
+	return *a + *b // Retornando o valor da memoria
+}
+
+func main() {
+	m1 := 20
+	m2 := 30
+	// A função soma faz uma copia das variaveis
+	// computa a ação e retorna o resultado
+	println(soma(&m1, &m2))
+	println(m1)
+	println(m2)
+
+}
+
+```
