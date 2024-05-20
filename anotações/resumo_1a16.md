@@ -43,7 +43,7 @@ func main() {
 ```
 
 ### Variavéis no GO
-Para declaramos a uma variavel podemos usar a palavra reserva da linguagem **var** e logo após o time de dado ao qual a variavel irá receber.
+Para declaramos uma variavel podemos usar a palavra reserva da linguagem **var** e logo após o tipo de dado ao qual a variavel irá receber.
 
 Exemplo: ``` nome var string ```
 
@@ -69,10 +69,7 @@ func main (){
 
 * Dentro de uma função, o operador de declaração curta **:=** , pode ser usado ao invés do operador var, ao usar o operador de declaração curta o mesmo iniciará as variáveis
 
-Digitando o comando ```go env``` é possível vê as variaveis de ambiente do go
-O código  ```GOPATH: endereço go``` serve para guardar o binario implementados.
-
-todos os ´´´packages´´´ usados no GO teram que possuir o mesmo nome da pasta onde o arquivo esta armazenado, tirando o ´´´main´´´ pois é onde estará as principais funções 
+Digitando o comando ```go env``` é possível vê as variaveis de ambiente do go. O código  ```GOPATH: endereço go``` serve para guardar os binarios implementados. Todos os *packages* usados no GO teram que possuir o mesmo nome da pasta onde o arquivo esta armazenado, tirando o *main* pois é onde estará as principais funções 
 
 #### Declarando uma variavel 
 
@@ -101,9 +98,7 @@ var (
 )
 ```
 
-Variaveis e Importes que não são usados o Go reclama e gera um erro.
-
-É possível ainda declarar variaveis na forma de sort slice é usado para simplificar as declarações de variaveis.
+Variaveis e Importes que não são usados o Go gera um erro. É possível ainda declarar variaveis na forma de sort slice é usado para simplificar as declarações de variaveis.
 
 ```Go
 
