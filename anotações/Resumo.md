@@ -6,7 +6,7 @@ O primeiro passo para que o arquivo seja executavél é a utilização do:
 
 ```go
 
-package main  // usado para dizer onde esta o pacote a ser usado 
+	package main  // usado para dizer onde esta o pacote a ser usado 
 
 import (
      "fmt"
@@ -809,6 +809,34 @@ func main() {
 	println(soma(&m1, &m2))
 	println(m1)
 	println(m2)
+
+}
+
+```
+
+# Ponteiros e Struct
+
+
+```Go
+
+package main
+
+import "fmt"
+
+type Cliente struct {
+	nome string
+}
+
+func (c Cliente) andou() {
+	c.nome = "Wesley Willian"
+	fmt.Printf("O cliente %v andou", c.nome)
+}
+
+func main() {
+	wesley := Cliente{
+		nome: "Wesley",
+	}
+	wesley.andou()
 
 }
 
