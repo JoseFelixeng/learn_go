@@ -828,8 +828,9 @@ type Cliente struct {
 }
 
 func (c Cliente) andou() {
-	c.nome = "Wesley Willian"
-	fmt.Printf("O cliente %v andou", c.nome)
+	c.nome = "Wesley Willian" // variavel local
+	fmt.Printf("O cliente %v andou \n", c.nome)
+
 }
 
 func main() {
@@ -837,7 +838,296 @@ func main() {
 		nome: "Wesley",
 	}
 	wesley.andou()
+	fmt.Printf("O valor da Struct com nome é %v", wesley.nome) // Variavel local atribuida
 
 }
 
 ```    
+
+Mais um exemplo dessa vez usando Ponteiro:
+
+```Go
+
+package main
+
+import "fmt"
+
+type Conta struct {
+	saldo float64
+}
+
+// Criando uma função que inicia com valor zerado
+// Atuando como um construtor
+func NewConta() *Conta {
+	return &Conta{saldo: 0} // Criando uma conta com saldo zerado.
+}
+
+// Função para simular o saldo
+func (c *Conta) simular(valor float64) float64 {
+	// Ao usar ponteiro é armazenado direto no lugar da memoria o valor de conta
+	// Nesse caso o valor será alterado diretamente na memoria
+	c.saldo += valor
+	fmt.Println(c.saldo)
+	return c.saldo
+}
+
+func main() {
+	conta := Conta{saldo: 100}
+	conta.simular(200)
+	fmt.Println(conta.saldo)
+
+}
+
+```
+
+# Interface Vazia  
+
+Usado para dar uma tipagem forte ao go mas deve ser usado com moderação. Uma caracteristica é que essa interface vai suportar qualquer coisa.
+
+```Go
+type x interface { // Essa interface implementa para todo
+}
+```
+
+
+```Go
+package main
+
+import "fmt"
+
+func main() {
+	var x interface{} = 10
+	var y interface{} = "Aqui é um texto\n"
+
+	// Chamando as variaveis
+	showType(x)
+	showType(y)
+}
+
+func showType(t interface{}) {
+	fmt.Println("O tipo da variavel é %T e o valor é %v\n", t, t)
+}
+
+
+
+```
+
+
+# Type Assertation
+
+Usado para transformar um determinado tipo em outro do Go, de forma a atualizar o tipo do dado.
+OBS: 
+
+``` Se voce utilizar apenas o "println/printf" o mesmo irá mostrar o endereçamento da memoria usado, já se voce usar a função "fmt" seguida dos prefixos visto anteriormente é possível imprimir os valores na memoria.```
+
+
+```go 
+
+package main
+
+import "fmt"
+
+func main() {
+	var minhaVar interface{} = "Jose Felix"
+	fmt.Println(minhaVar)
+	println(minhaVar.(string))
+	// Usado para mudar o tipo, se ok==true então a conversão pode ser feita
+	res, ok := minhaVar.(int)
+
+	fmt.Printf("O valor de res %v e ok é %v", res, ok)
+}
+
+```
+
+
+# Generics
+
+Pode ser usada para substituir uma interface vazia de forma a ser mais completa. Permite utilizar uma tipagem inteligente para que não seja necessario criar varias vezes o mesmo tipo/função/struct para receber dados diferentes.
+
+Exemplo sem uso do generics
+
+```Go
+
+package main
+
+func Soma(m map[string]int) int {
+	var soma int
+	for _, v := range m {
+		soma += v
+	}
+	return soma
+}
+
+func somaFloat(m map[string]float64) float64 {
+	var somaf float64
+	for _, v := range m {
+		somaf += v
+	}
+	return somaf
+}
+
+
+func main() {
+	m := map[string]int{"jose": 700, "Mateus": 1200, "Natalia": 10000}
+	m1 := map[string]float64{"jose": 70.50, "Mateus": 12.99, "Natalia": 10.59}
+	println(Soma(m))
+	println(somaFloat(m1))
+
+}
+
+
+```
+
+Usando o Generics
+
+```Go
+package main
+
+// Usando Generics
+func SomaG[T int | float64](m map[string]T) T {
+	var somaf T
+	for _, v := range m {
+		somaf += v
+	}
+	return somaf
+}
+
+func main() {
+	m := map[string]int{"jose": 700, "Mateus": 1200, "Natalia": 10000}
+	m1 := map[string]float64{"jose": 70.50, "Mateus": 12.99, "Natalia": 10.59}
+	println(SomaG(m))
+	println(SomaG(m1))
+
+```
+
+Exemplo usando 
+
+```Go 
+
+package main
+
+//Constract
+// Usado para agregar varios tipos
+type Number interface {
+	int | float64
+}
+
+type myNumber int
+
+// Usando Generics
+func SomaG[T Number](m map[string]T) T {
+	var somaf T
+	for _, v := range m {
+		somaf += v
+	}
+	return somaf
+}
+
+func main() {
+	m := map[string]int{"jose": 700, "Mateus": 1200, "Natalia": 10000}
+	m1 := map[string]float64{"jose": 70.50, "Mateus": 12.99, "Natalia": 10.59}
+	m2 := map[string]myNumber{"jose": 700, "Mateus": 1200, "Natalia": 10000}
+	println(SomaG(m))
+	println(SomaG(m1))
+	println(m2)
+
+}
+```
+
+# Pacotes e Módulos 
+
+##  Pacotes   
+Esses pacotes são os pacotes criados pelo programador ou pelo proprio go. Para os arquivos chamados da função desses pacote criados, devem está por padrão dentro da pasta GOROOT caso contrario o programa dará um erro alertando que o não existe a função, para resolver esse problema usamos os modulos do GO.
+
+## Módulos 
+
+O modulo no Go serve para que o arquivo possa ser buscado na pasta atual ao qual o diretorio que esta sendo usado para armazenar esta guardando o arquivo.
+
+	1 - Inicializando o Go mod: `go mod init <name_modulo>`
+		`Exemplo: go mod init github.com/fullcycle/curso-go`
+
+Quando o arquivo mod é criado o go vai procurar dentro da pasta do projeto atual.
+
+#### Exemplo
+
+Função matematica
+
+```go
+
+package matematica
+
+func SomaT[T int | float64](a, b T) T {
+	return a + b
+}
+
+```
+
+
+
+Função main
+
+```go
+
+package main
+
+import (
+	"fmt"
+	"matematica/matematica"
+)
+
+func main() {
+	s := matematica.SomaT(10, 20)
+	fmt.Println("O Resultaod : ", s)
+}
+
+```
+
+Nesse exemplo a função main importa do arquivo de função a SomaT que é instanciada e chamada na função main.
+
+**OBS:** No Go se uma função esta escrita com a primeira letra em minusculos `soma` essa função só poderá ser usada dentro do arquivo ao qual a mesma pertence, dessa forma se a função vai ser utilizada\chamada dentro de outro arquivo é interessante que o mesmo seja escrito da seguinte forma `Soma` dessa forma no Go o arquivo poderá ser usado por outras funções fora do arquivo padrão.  
+
+```go
+package matematica
+
+import "fmt"
+
+func Soma[T int | float64](a, b T) T {
+	return a + b
+}
+
+var A int = 10
+
+type Carro struct {
+	Marca string
+}
+
+func (c Carro) Andar() {
+	fmt.Println("O carro está andando!")
+}
+
+func (c Carro) Andarr() string {
+	return "O carro está andando!"
+}
+
+```
+
+
+```go 
+package main
+
+import (
+	"fmt"
+	"matematica/matematica"
+)
+
+func main() {
+	s := matematica.Soma(10, 20)
+	carro := matematica.Carro{Marca: "fiat"}
+	carro.Andar()
+	fmt.Println("chamando a função para ", carro.Andarr())
+	fmt.Println("O Resultaod : $", s)
+	fmt.Println("A marca do carro é ", carro.Marca)
+	fmt.Println("O valor de a na função matematica", matematica.A)
+}
+
+```
