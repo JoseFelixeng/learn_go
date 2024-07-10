@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"matematica/matematica"
+
+	"github.com/google/uuid"
 )
 
 func main() {
@@ -13,4 +15,5 @@ func main() {
 	fmt.Println("O Resultaod : $", s)
 	fmt.Println("A marca do carro é ", carro.Marca)
 	fmt.Println("O valor de a na função matematica", matematica.A)
+	fmt.Println(uuid.New())
 }
