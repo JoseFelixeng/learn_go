@@ -1,4 +1,4 @@
-# Introcução a Linguagem golang
+'# Introcução a Linguagem golang
 
 A extensão usada pela linguagem é o .go. 
 
@@ -6,7 +6,7 @@ O primeiro passo para que o arquivo seja executavél é a utilização do:
 
 ```go
 
-	package main  // usado para dizer onde esta o pacote a ser usado 
+package main  // usado para dizer onde esta o pacote a ser usado 
 
 import (
      "fmt"
@@ -28,6 +28,7 @@ func main(){
 No go todos os programas são organizados em pacotes, um pacote é um grupo de arquivos que estão em um mesmo local e eles são compilados juntos. Dessa forma todos os arquivos serão compartilhados entre todos os pacotes. No programa acima podemos vê como se criar um código simples que mostre a mensagem olá mundo.
 
 Um outro exemplo simples: 
+
 ```go
 package main // usado para dizer onde esta o pacote a ser usado
 
@@ -43,6 +44,7 @@ func main() {
 ```
 
 ### Variavéis no GO
+
 Para declaramos uma variavel podemos usar a palavra reserva da linguagem **var** e logo após o tipo de dado ao qual a variavel irá receber.
 
 Exemplo: ``` nome var string ```
@@ -59,6 +61,7 @@ import(
 
 
 var  c, python, java
+
 func main (){
 	var i int 
 	fmt.Println(i, c, python, java)
@@ -70,7 +73,7 @@ func main (){
 * Dentro de uma função, o operador de declaração curta **:=** , pode ser usado ao invés do operador var, ao usar o operador de declaração curta o mesmo iniciará as variáveis
 
 Digitando o comando ```go env``` é possível vê as variaveis de ambiente do go. O código  ```GOPATH: endereço go``` serve para guardar os binarios implementados. Todos os *packages* usados no GO teram que possuir o mesmo nome da pasta onde o arquivo esta armazenado, tirando o *main* pois é onde estará as principais funções 
-
+P
 #### Declarando uma variavel 
 
 ```Go
@@ -1284,7 +1287,7 @@ func main() {
 
 ## Compilando Projetos
 
-##### Runtime 
+##### RUNTIME
 
 É o local onde fica armazenado todas as informações necessarias para rodar o código, todas as dependencias no Go ficam salvas no Runtime.
 
@@ -1298,3 +1301,83 @@ Podemos vê mais sobre: https://www.digitalocean.com/community/tutorials/buildin
 
 
 se usamos o "go env" podemos vê como estão configuradas as variaveis de ambiente no Go.
+
+
+
+##### MANIPULAÇÃO DE ARQUIVOS 
+
+
+```go 
+
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
+
+func main() {
+
+	/// CRIAÇÃO DO ARQUIVO
+	f, err := os.Create("arquivo.txt") // Usado para criar um arquivo de texto
+	if err != nil {
+		panic(err)
+	}
+
+	/// GRAVANDO DADOS
+	tamanho, err := f.Write([]byte("Escrevendo no Arquivo!")) // usado para escrever no arquivo de nab
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Arquivo Criado com Sucesso! tamanho : %d bytes \n", tamanho)
+	f.Close() // Fechar o arquivo de texto
+
+	/// LEITURA DO ARQUIVO
+	//arquivo, err := os.Open("arquivo.txt"
+	arquivo, err := os.ReadFile("arquivo.txt") //usado para lê os dados do arquivo
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(string(arquivo)) //Convertendo os dados para string para ficar melhor de visualizar
+
+	/// LEITURA DE POUCO EM POUCO ABRINDO O ARQUIVO
+	file, err := os.Open("arquivo.txt")
+	if err != nil {
+		panic(err)
+	}
+	// O pacote BUFFIO pode ser usado para fazer pequenas leituras do arquivo e carregar aos poucos na memoria.
+	reader := bufio.NewReader(file)
+	buffer := make([]byte, 10) // Configurando o tamanho da leitura
+	// Lendo o arquivo
+	for {
+		n, err := reader.Read(buffer)
+		if err != nil {
+			break
+		}
+		fmt.Println(string(buffer[:n]))
+	}
+	err := os.Remove("arquivo.txt") // Usado para remover o arquivo
+	if err != nil {
+		panic(err)
+	}
+
+}
+
+```
+
+##### REALIZANDO CHAMADA HTTP
+
+
+```go 
+
+package main 
+
+func main(){
+
+}
+
+```
+
