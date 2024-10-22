@@ -1373,11 +1373,102 @@ func main() {
 
 ```go 
 
-package main 
+package main
 
-func main(){
+import (
+	"io"
+	"net/http"
+) // biblioteca usada para fazer chamadas no http
 
+func main() {
+
+	req, err := http.Get("https://www.google.com") // fazendo uma request com GO
+	if err != nil {
+		panic(err)
+	}
+
+	res, err := io.ReadAll(req.Body) // usado para lê o dado do req
+	if err != nil {
+		panic(err)
+	}
+	println(string(res)) //usado para mostrar os dados da requisição
+	req.Body.Close()     // usado para fechar o arquivo e evitar vazamento de dados.
 }
+
 
 ```
 
+
+##### DEFER 
+Usado em sua maioria para atrasar alguma tarefa. Usado de maneira geral para evitar que alguma atividade importante não deixe de ser executada.
+
+```Go
+package main
+
+import (
+	"fmt"
+) // biblioteca usada para fazer chamadas no http
+
+func main() {
+	defer fmt.Println("primeira linha")
+	fmt.Println("segunda linha")
+	fmt.Println("terceira linha")
+}
+
+
+```
+
+
+##### Trabalhando com JSON
+Nos tempos atuais é importantissimo a comunicação entre diversas linguagens, dessa forma sendo possível usar funções extras dentro da linguagem. Podemos usar um encode para transicionar os dados em JSON para um tipo usavel.
+
+```go 
+
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+)
+
+// Podemos usar tgs nas struct
+
+type Conta struct {
+	Numero int `json:"n"`
+	Saldo  int `json:"s"`
+}
+
+func main() {
+	conta := Conta{Numero: 1, Saldo: 100}
+
+	res, err := json.Marshal(conta) // marshal usado par transformar o dado em byte.
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(res)) // converto o binario json em string
+
+	err = json.NewEncoder(os.Stdout).Encode(conta) // faz a serialização do dado
+
+	if err != nil {
+		println(err)
+	}
+
+	jsonPuro := []byte(`{"n": 2 , "s": 200}`)
+	var contaX Conta
+	// fazendo o teste contrario
+	err = json.Unmarshal(jsonPuro, &contaX)
+
+	if err != nil {
+		println(err)
+	}
+
+	println(contaX.Saldo)
+
+}
+
+
+
+```
+
+##### Buscando CEP 
